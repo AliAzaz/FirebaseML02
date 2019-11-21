@@ -1,10 +1,8 @@
 package com.abcd.firebasemlkit02
 
-import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
@@ -104,6 +102,20 @@ class FaceContourGraphic(var canvas: Canvas) {
                 idPaint
             )
         }*/
+        val leftEyeBrow = face.getContour(FirebaseVisionFaceContour.LEFT_EYEBROW_TOP).points
+        for ((j, contour) in leftEyeBrow.withIndex()) {
+            if (j != leftEyeBrow.lastIndex)
+                canvas.drawLine(
+                    contour.x,
+                    contour.y,
+                    leftEyeBrow[j + 1].x,
+                    leftEyeBrow[j + 1].y,
+                    facePositionPaint
+                )
+            canvas.drawCircle(contour.x, contour.y, 4F, facePositionPaint)
+        }
+
+
         val leftEye = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EYE)
         if (leftEye != null && leftEye.position != null) {
             canvas.drawCircle(
