@@ -46,7 +46,7 @@ class FaceContourGraphic(var canvas: Canvas) {
     }
 
     /** Draws the face annotations for position on the supplied canvas.  */
-    fun draw() {
+    private fun draw() {
         val face = firebaseVisionFace ?: return
 
         // Draws a circle at the position of the detected face, with the face's track id below.
