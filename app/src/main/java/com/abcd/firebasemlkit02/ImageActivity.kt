@@ -8,14 +8,14 @@ import com.abcd.firebasemlkit02.baseDialog.BaseDialogPresenter
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_image.*
 
 
-class MainActivity : AppCompatActivity() {
+class ImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_image)
 
         val dialog = BaseDialogPresenter(this)
         dialog.setAlertDialogView(true)
