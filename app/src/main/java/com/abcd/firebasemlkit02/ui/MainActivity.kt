@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         lstMenu.setOnItemClickListener { adapterView, view, position, l ->
             when (position) {
                 0 -> startActivity(Intent(this, ImageActivity::class.java))
+                1 -> startActivity(Intent(this, ImageParseActivity::class.java))
             }
         }
     }

@@ -7,7 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import com.abcd.firebasemlkit02.R
+import com.abcd.firebasemlkit02.VModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,17 +27,16 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ImageFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var vModel: VModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        vModel = activity?.run {
+            ViewModelProviders.of(this)[VModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+        vModel.passData("abc")
     }
 
     override fun onCreateView(
@@ -51,11 +54,11 @@ class ImageFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
+        /*if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }
+        }*/
     }
 
     override fun onDetach() {
