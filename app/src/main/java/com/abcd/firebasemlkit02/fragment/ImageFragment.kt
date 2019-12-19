@@ -1,50 +1,101 @@
 package com.abcd.firebasemlkit02.fragment
 
 import android.content.Context
+import android.graphics.*
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.abcd.firebasemlkit02.FaceContour
 import com.abcd.firebasemlkit02.R
 import com.abcd.firebasemlkit02.VModel
+import com.abcd.firebasemlkit02.baseDialog.BaseDialogPresenter
+import com.abcd.firebasemlkit02.databinding.FragmentImageBinding
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions
+import kotlinx.android.synthetic.main.activity_image.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ImageFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ImageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ImageFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var vModel: VModel
+    private lateinit var bi: FragmentImageBinding
+    private lateinit var dialog: BaseDialogPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        //set view model
         vModel = activity?.run {
             ViewModelProviders.of(this)[VModel::class.java]
         } ?: throw Exception("Invalid Activity")
-        vModel.passData("abc")
+
+//        dialog = BaseDialogPresenter(activity as Context)
+//        dialog.setAlertDialogView(true)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image, container, false)
+
+        bi = FragmentImageBinding.inflate(inflater, container, false)
+
+        // High-accuracy landmark detection and face classification
+        val highAccuracyOpts = FirebaseVisionFaceDetectorOptions.Builder()
+            .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+            .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+            .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
+            .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+            .build()
+
+        bi.imgPic.setImageBitmap(
+            BitmapFactory.decodeResource(
+                this.resources,
+                R.drawable.samplec
+            )
+        )
+
+        val image = FirebaseVisionImage.fromBitmap(
+            bi.imgPic.drawable.toBitmap()
+        )
+
+        val detector = FirebaseVision.getInstance().getVisionFaceDetector(highAccuracyOpts)
+
+        detector.detectInImage(image)
+            .addOnSuccessListener { faces ->
+
+                if (faces.size === 0) {
+                    dialog.setMessage("No Face Found!!")
+                    return@addOnSuccessListener
+                }
+
+                val mutableBitmap = imgPic.drawable.toBitmap().copy(Bitmap.Config.ARGB_8888, true)
+                val canvas = Canvas(mutableBitmap)
+                val graphics = onGettingGraphics()
+
+                for (face in faces) {
+                    FaceContour(canvas, graphics).updateFace(face)
+//                    FaceContourGraphic(canvas).updateFace(face)
+                }
+
+//                dialog.setAlertDialogView(false)
+
+                bi.imgPic.setImageBitmap(mutableBitmap)
+
+
+            }
+            .addOnFailureListener { e ->
+                // Task failed with an exception
+                // ...
+            }
+
+        return bi.root
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -66,39 +117,28 @@ class ImageFragment : Fragment() {
         listener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments]
-     * (http://developer.android.com/training/basics/fragments/communicating.html)
-     * for more information.
-     */
     interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ImageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ImageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    private fun onGettingGraphics(): Triple<Paint, Paint, Paint> {
+        val rectPaint = Paint()
+        rectPaint.color = Color.RED
+        rectPaint.style = Paint.Style.STROKE
+        rectPaint.strokeWidth = 10F
+
+        val textPaint = Paint()
+        textPaint.color = Color.RED
+        textPaint.textSize = 40F
+
+        val circlePaint = Paint()
+        circlePaint.color = Color.BLUE
+        circlePaint.textSize = 10F
+        circlePaint.style = Paint.Style.FILL
+
+        return Triple(rectPaint, textPaint, circlePaint)
     }
+
 }

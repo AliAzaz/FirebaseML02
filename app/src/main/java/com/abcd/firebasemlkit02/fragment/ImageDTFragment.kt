@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.abcd.firebasemlkit02.R
 import com.abcd.firebasemlkit02.VModel
+import com.abcd.firebasemlkit02.databinding.FragmentImageDtBinding
 import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,24 +29,29 @@ private const val ARG_PARAM2 = "param2"
  */
 class ImageDTFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var bi: FragmentImageDtBinding
     private lateinit var vModel: VModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         vModel = activity?.run { ViewModelProviders.of(this)[VModel::class.java] }
             ?: throw Exception("Invalidate Activity")
-
-        vModel.selected.value!!.showToast()
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_image_dt, container, false)
+
+        bi = FragmentImageDtBinding.inflate(inflater, container, false)
+
+
+        "Data received".showToast()
+
+        // Get data from viewmodel
+        bi.dt.text = vModel.selected.value
+
+        return bi.root
     }
 
     // TODO: Rename method, update argument and hook method into UI event
