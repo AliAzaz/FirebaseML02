@@ -10,7 +10,6 @@ import android.widget.TextView
 
 open class BaseDialogMain(context: Context) : BaseDialogView.UIView, ProgressBar(context) {
 
-    private val llPadding = 30
     private val ll: LinearLayout = LinearLayout(context)
     private val tvText: TextView = TextView(context)
     private val builder = AlertDialog.Builder(context)
@@ -30,15 +29,9 @@ open class BaseDialogMain(context: Context) : BaseDialogView.UIView, ProgressBar
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         ll.layoutParams = llParam
-
         this.isIndeterminate = true
-
-//        this.setPadding(30, 30, 30, 30)
-
         tvText.layoutParams = llParam
-
         setViewToBuilder()
-
     }
 
 

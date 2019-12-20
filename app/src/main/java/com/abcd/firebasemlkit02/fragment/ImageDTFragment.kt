@@ -1,6 +1,5 @@
 package com.abcd.firebasemlkit02.fragment
 
-import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.abcd.firebasemlkit02.R
 import com.abcd.firebasemlkit02.VModel
 import com.abcd.firebasemlkit02.databinding.FragmentImageDtBinding
-import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,10 +44,16 @@ class ImageDTFragment : Fragment() {
         bi = FragmentImageDtBinding.inflate(inflater, container, false)
 
 
-        "Data received".showToast()
+//        "Data received".showToast()
 
         // Get data from viewmodel
-        bi.dt.text = vModel.selected.value
+        val data = mutableListOf<String>()
+        vModel.selected.observe(this, Observer { item ->
+            //            data.add("$item+\n")
+
+            bi.dt.text = "${bi.dt.text}\n $item"
+
+        })
 
         return bi.root
     }
@@ -57,15 +61,6 @@ class ImageDTFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /*if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }*/
     }
 
     override fun onDetach() {

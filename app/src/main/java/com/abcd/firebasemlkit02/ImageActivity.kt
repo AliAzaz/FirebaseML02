@@ -49,7 +49,7 @@ class ImageActivity : AppCompatActivity() {
         detector.detectInImage(image)
             .addOnSuccessListener { faces ->
 
-                if (faces.size === 0) {
+                if (faces.size == 0) {
                     dialog.setMessage("No Face Found!!")
                     return@addOnSuccessListener
                 }

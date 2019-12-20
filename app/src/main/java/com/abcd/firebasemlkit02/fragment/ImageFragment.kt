@@ -9,10 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.abcd.firebasemlkit02.FaceContour
+import com.abcd.firebasemlkit02.FaceContourGraphic
 import com.abcd.firebasemlkit02.R
 import com.abcd.firebasemlkit02.VModel
 import com.abcd.firebasemlkit02.baseDialog.BaseDialogPresenter
@@ -35,8 +33,8 @@ class ImageFragment : Fragment() {
             ViewModelProviders.of(this)[VModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
-//        dialog = BaseDialogPresenter(activity as Context)
-//        dialog.setAlertDialogView(true)
+        dialog = BaseDialogPresenter(activity as Context)
+        dialog.setAlertDialogView(true)
     }
 
     override fun onCreateView(
@@ -51,26 +49,21 @@ class ImageFragment : Fragment() {
             .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
             .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
             .setClassificationMode(FirebaseVisionFaceDetectorOptions.ALL_CLASSIFICATIONS)
-            .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
             .build()
 
         bi.imgPic.setImageBitmap(
             BitmapFactory.decodeResource(
                 this.resources,
-                R.drawable.samplec
+                R.drawable.samplea
             )
         )
 
-        val image = FirebaseVisionImage.fromBitmap(
-            bi.imgPic.drawable.toBitmap()
-        )
-
+        val image = FirebaseVisionImage.fromBitmap(bi.imgPic.drawable.toBitmap())
         val detector = FirebaseVision.getInstance().getVisionFaceDetector(highAccuracyOpts)
-
         detector.detectInImage(image)
             .addOnSuccessListener { faces ->
 
-                if (faces.size === 0) {
+                if (faces.size == 0) {
                     dialog.setMessage("No Face Found!!")
                     return@addOnSuccessListener
                 }
@@ -79,16 +72,14 @@ class ImageFragment : Fragment() {
                 val canvas = Canvas(mutableBitmap)
                 val graphics = onGettingGraphics()
 
-                for (face in faces) {
-                    FaceContour(canvas, graphics).updateFace(face)
-//                    FaceContourGraphic(canvas).updateFace(face)
-                }
+                for (i in 0 until faces.size) FaceContourGraphic(
+                    vModel,
+                    canvas
+                ).updateFace(faces[i], i + 1)
 
-//                dialog.setAlertDialogView(false)
+                dialog.setAlertDialogView(false)
 
                 bi.imgPic.setImageBitmap(mutableBitmap)
-
-
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception
@@ -101,15 +92,6 @@ class ImageFragment : Fragment() {
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /*if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
-        }*/
     }
 
     override fun onDetach() {
