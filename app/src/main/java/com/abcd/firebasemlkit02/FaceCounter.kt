@@ -7,7 +7,7 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 
 class FaceContour(var canvas: Canvas, val graphics: Triple<Paint, Paint, Paint>) {
 
-    inline fun updateFace(face: FirebaseVisionFace) {
+    fun updateFace(face: FirebaseVisionFace) {
         val faceContours = face.getContour(FirebaseVisionFaceContour.FACE).points
         for ((i, contour) in faceContours.withIndex()) {
             if (i != faceContours.lastIndex)
