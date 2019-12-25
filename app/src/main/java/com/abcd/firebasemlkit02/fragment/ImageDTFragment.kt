@@ -2,10 +2,10 @@ package com.abcd.firebasemlkit02.fragment
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -43,16 +43,10 @@ class ImageDTFragment : Fragment() {
 
         bi = FragmentImageDtBinding.inflate(inflater, container, false)
 
-
-//        "Data received".showToast()
-
         // Get data from viewmodel
-        val data = mutableListOf<String>()
         vModel.selected.observe(this, Observer { item ->
-            //            data.add("$item+\n")
-
+            item.showLog()
             bi.dt.text = "${bi.dt.text}\n $item"
-
         })
 
         return bi.root
@@ -104,8 +98,8 @@ class ImageDTFragment : Fragment() {
             }
     }
 
-    private fun String.showToast() {
-        Toast.makeText(activity, this, Toast.LENGTH_SHORT).show()
+    private fun String.showLog() {
+        Log.i(activity!!::class.java.name, this)
     }
 
 }

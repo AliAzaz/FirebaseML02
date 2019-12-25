@@ -35,18 +35,18 @@ open class BaseDialogMain(context: Context) : BaseDialogView.UIView, ProgressBar
     }
 
 
-    override fun dismissDialog(dialog: AlertDialog) {
-        dialog.dismiss()
+    override fun dismissDialog(builder: AlertDialog) {
+        builder.dismiss()
     }
 
-    override fun showDialog(dialog: AlertDialog) {
-        dialog.show()
-        if (dialog.window != null) {
+    override fun showDialog(builder: AlertDialog) {
+        builder.show()
+        builder.window?.let {
             val layoutParams = WindowManager.LayoutParams()
-            layoutParams.copyFrom(dialog.window!!.attributes)
+            layoutParams.copyFrom(builder.window!!.attributes)
             layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT
             layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT
-            dialog.window!!.attributes = layoutParams
+            builder.window!!.attributes = layoutParams
         }
     }
 
@@ -75,13 +75,10 @@ open class BaseDialogMain(context: Context) : BaseDialogView.UIView, ProgressBar
     }
 
     private fun setViewToBuilder() {
-
-        if (ll.parent != null) ll.removeAllViews()
-
+        ll.parent?.let { ll.removeAllViews() }
         ll.addView(this)
         ll.addView(tvText)
         builder.setView(ll)
-
         baseDialog = builder.create()
     }
 }
