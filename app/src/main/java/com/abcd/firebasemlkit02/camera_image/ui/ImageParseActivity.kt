@@ -1,4 +1,4 @@
-package com.abcd.firebasemlkit02.ui
+package com.abcd.firebasemlkit02.camera_image.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

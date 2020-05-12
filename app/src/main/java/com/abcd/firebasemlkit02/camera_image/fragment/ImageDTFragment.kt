@@ -1,4 +1,4 @@
-package com.abcd.firebasemlkit02.fragment
+package com.abcd.firebasemlkit02.camera_image.fragment
 
 import android.net.Uri
 import android.os.Bundle
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.abcd.firebasemlkit02.VModel
+import com.abcd.firebasemlkit02.camera_image.viewmodel.VModel
 import com.abcd.firebasemlkit02.databinding.FragmentImageDtBinding
 
 // TODO: Rename parameter arguments, choose names that match

@@ -1,4 +1,4 @@
-package com.abcd.firebasemlkit02.baseDialog
+package com.abcd.firebasemlkit02.custom_dialog
 
 import android.app.AlertDialog
 import android.content.Context

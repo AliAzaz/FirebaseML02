@@ -6,7 +6,7 @@
 
         <variable
             name="callback"
-            type="com.abcd.firebasemlkit02.fragment.ImageDTFragment" />
+            type="com.abcd.firebasemlkit02.camera_image.fragment.ImageDTFragment" />
 
     </data>
 
@@ -14,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.ImageDTFragment">
+        tools:context=".camera_image.fragment.ImageDTFragment">
 
         <!-- TODO: Update blank fragment layout -->
         <TextView

@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ImageParseActivity">
+    tools:context=".camera_image.ui.ImageParseActivity">
 
     <fragment
         android:id="@+id/image_fragment"
-        android:name="com.abcd.firebasemlkit02.fragment.ImageFragment"
+        android:name="com.abcd.firebasemlkit02.camera_image.fragment.ImageFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/image_dt_fragment"
-        android:name="com.abcd.firebasemlkit02.fragment.ImageDTFragment"
+        android:name="com.abcd.firebasemlkit02.camera_image.fragment.ImageDTFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

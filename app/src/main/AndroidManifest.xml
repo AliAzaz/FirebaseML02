@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ImageParseActivity"></activity>
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".camera_image.ui.ImageParseActivity"></activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="face" /> <!-- To use multiple models: android:value="face,model2,model3" -->
         <activity
-            android:name=".ImageActivity"
+            android:name=".image_contour.ui.ImageActivity"
             android:screenOrientation="portrait" />
     </application>
 

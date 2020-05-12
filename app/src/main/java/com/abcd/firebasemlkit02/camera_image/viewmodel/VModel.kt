@@ -1,4 +1,4 @@
-package com.abcd.firebasemlkit02
+package com.abcd.firebasemlkit02.camera_image.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

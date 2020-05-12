@@ -1,8 +1,9 @@
-package com.abcd.firebasemlkit02
+package com.abcd.firebasemlkit02.camera_image.utils
 
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import com.abcd.firebasemlkit02.camera_image.viewmodel.VModel
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark
@@ -26,7 +27,8 @@ class FaceContourGraphic(var vModel: VModel, var canvas: Canvas) {
 
         idPaint = Paint()
         idPaint.color = selectedColor
-        idPaint.textSize = ID_TEXT_SIZE
+        idPaint.textSize =
+            ID_TEXT_SIZE
 
         boxPaint = Paint()
         boxPaint.color = selectedColor

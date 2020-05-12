@@ -1,11 +1,11 @@
-package com.abcd.firebasemlkit02.ui
+package com.abcd.firebasemlkit02
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.abcd.firebasemlkit02.ImageActivity
-import com.abcd.firebasemlkit02.R
+import com.abcd.firebasemlkit02.camera_image.ui.ImageParseActivity
+import com.abcd.firebasemlkit02.image_contour.ui.ImageActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 

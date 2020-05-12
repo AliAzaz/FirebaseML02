@@ -1,11 +1,11 @@
-package com.abcd.firebasemlkit02
+package com.abcd.firebasemlkit02.image_contour.utils
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.google.firebase.ml.vision.face.FirebaseVisionFace
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour
 
-class FaceContour(var canvas: Canvas, val graphics: Triple<Paint, Paint, Paint>) {
+class FaceContour(var canvas: Canvas, private val graphics: Triple<Paint, Paint, Paint>) {
 
     fun updateFace(face: FirebaseVisionFace) {
         val faceContours = face.getContour(FirebaseVisionFaceContour.FACE).points
